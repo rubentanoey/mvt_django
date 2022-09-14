@@ -7,10 +7,20 @@ from django.core import serializers
 def show_wishlist(request):
     return render(request, "wishlist.html", context)
 
-def show_xml(data):
+def show_xml_id(request, id):
+    data = BarangWishlist.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+def show_xml(request):
+    data = BarangWishlist.objects.all()
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
     
-def show_json(data):
+def show_json_id(request, id):
+    data = BarangWishlist.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+    
+def show_json(request):
+    data = BarangWishlist.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 data_barang_wishlist = BarangWishlist.objects.all()
