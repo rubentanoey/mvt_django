@@ -1,9 +1,17 @@
 from django.shortcuts import render
 from wishlist.models import BarangWishlist
+from django.http import HttpResponse
+from django.core import serializers
 
 # Create your views here.
 def show_wishlist(request):
     return render(request, "wishlist.html", context)
+
+def show_xml(data):
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+    
+def show_json(data):
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 data_barang_wishlist = BarangWishlist.objects.all()
 context = {
