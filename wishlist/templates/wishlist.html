@@ -1,26 +1,38 @@
-{% extends 'base.html' %}
+<!doctype html>
+{% load static %}
+<html lang="en">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    
+    <nav class="d-flex d-6" style="padding: 20px; background-color: #036BFB; color: white; border-radius: 6px">
+        <h2 style="padding-right: 20px;">Ruben Tanoey</h2>
+        <button class="btn btn-light"><a href="{% url 'wishlist:logout' %}">Logout</a></button>
+    </nav>
 
-{% block content %}
-<h5>Nama: </h5>
-<b>Ruben Tanoey</b>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <h5>Nama: </h5>
+        <b>{{nama}}</b>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    </head>
 
-<table>
-    <tr>
-    <th>Nama Barang</th>
-    <th>Harga Barang</th>
-    <th>Deskripsi</th>
-    </tr>
-    {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
-    {% for barang in list_barang %}
-    <tr>
-        <th>{{barang.nama_barang}}</th>
-        <th>{{barang.harga_barang}}</th>
-        <th>{{barang.deskripsi}}</th>
-    </tr>
-{% endfor %}
-</table>
-
-<h5>Sesi terakhir login: {{ last_login }}</h5>
-<button><a href="{% url 'wishlist:logout' %}">Logout</a></button>
-
-{% endblock content %}
+    <body style="max-width: 700px; margin: auto;">
+        <table class="table" style="margin-top: 6px; padding: 6px;">
+            <tr class="table-dark" style="color: whitesmoke">
+            <th>Nama Barang</th>
+            <th>Harga Barang</th>
+            <th>Deskripsi</th>
+            </tr>
+            {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
+            {% for barang in list_barang %}
+            <tr class="table-secondary" style="">
+                <th>{{barang.nama_barang}}</th>
+                <th>{{barang.harga_barang}}</th>
+                <th>{{barang.deskripsi}}</th>
+            </tr>
+            {% endfor %}
+        </table>
+        <p>Sesi terakhir login: {{ last_login }}</p>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    </body>
+</html>
