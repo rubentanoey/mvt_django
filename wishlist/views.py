@@ -22,6 +22,10 @@ def show_wishlist(request):
     }
     return render(request, "wishlist.html", context)
 
+def show_wishlist_ajax(request):
+    context = {}
+    return render(request, "wishlist_ajax.html", context)
+
 def show_xml_id(request, id):
     data = BarangWishlist.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")

@@ -1,0 +1,85 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+    
+    <nav class="d-flex d-6" style="padding: 20px; background-color: #036BFB; color: white; border-radius: 6px">
+        <h2 style="padding-right: 20px;">Ruben Tanoey</h2>
+        <button class="btn btn-light"><a href="{% url 'wishlist:logout' %}">Logout</a></button>
+    </nav>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <h5>Nama: </h5>
+        <b>{{nama}}</b>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <script>
+            $(document).ready(function(){
+                $.get("/wishlist/json", function(data) { // get data dalam bentuk list of data
+                    console.log(data); // mau print data ke console
+    
+                    $.each(data, function(i, data) { // dia bakal looping list yang diperoleh untuk memperoleh data
+                        console.log(data.fields.deskripsi); // ngeprint semua data deskripsi ke console
+                        console.log(data.fields.harga_barang);
+                        console.log(data.fields.nama_barang);
+                        
+                        var namaBarang = `<th> ${data.fields.nama_barang}</th>`
+                        // $(namaBarang).appendTo(".edit") // ini class selector yang select elemen HTML dengan atribut class yang bernama edit
+                                                           // namaBarang akan append ke edit
+    
+                        var hargaBarang = `<th> ${data.fields.harga_barang}</th>` // `` untuk string formatting terhadap dynamic variable
+      
+    
+                        var deskripsi = `<th> ${data.fields.deskripsi}</th>` // `` untuk string formatting terhadap dynamic variable
+    
+    
+                        var tr = `<tr> ${namaBarang} ${hargaBarang} ${deskripsi}</tr>` 
+    
+                        $(tr).appendTo(".edit");
+                    });
+    
+                });
+    
+                $(".user-form").submit(function(event){
+                event.preventDefault();
+                
+                var form = $(this)
+                var url = form.attr('action')
+    
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: form.serialize(),
+                    success: function(data) {
+                        console.log(data)
+                    }
+                })
+    
+                });
+                
+            });
+    
+            
+            
+    
+        </script>
+    </head>
+    
+    <body style="max-width: 700px; margin: auto;">
+        <table class="table" style="margin-top: 6px; padding: 6px;">
+            <tr class="table-dark" style="color: whitesmoke">
+            <th>Nama Barang</th>
+            <th>Harga Barang</th>
+            <th>Deskripsi</th>
+            </tr>
+            {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
+            {% for barang in list_barang %}
+            <tr class="table-secondary" id="derived" style="">
+                
+            </tr>
+            {% endfor %}
+        </table>
+        <p>Sesi terakhir login: {{ last_login }}</p>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    </body>
+</html>
